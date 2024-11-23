@@ -1,0 +1,30 @@
+﻿# EditorConfig for F# Project
+
+# Top-level settings for all files
+root = true
+
+[*.{fs,fsx}]
+# General settings
+indent_style = space       # Use spaces for indentation
+indent_size = 4            # Set indent size to 4 spaces
+tab_width = 4              # Set the tab width to 4
+end_of_line = crlf           # Use CRLF as line ending
+charset = utf-8            # Use UTF-8 encoding
+trim_trailing_whitespace = true  # Remove trailing whitespace on save
+insert_final_newline = true     # Ensure the file ends with a newline
+
+# F# specific formatting rules
+fsharp_keep_max_number_of_blank_lines = 1
+fsharp_multiline_bracket_style = aligned
+fsharp_space_before_parameter = true
+fsharp_space_before_lowercase_invocation = true
+fsharp_space_before_class_constructor = false
+fsharp_space_after_comma = true
+fsharp_space_after_semicolon = true
+dotnet_naming_rule.methods_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.methods_should_be_pascal_case.symbols = methods
+dotnet_naming_rule.methods_should_be_pascal_case.style = pascal_case
+dotnet_naming_symbols.methods.applicable_kinds = method
+dotnet_naming_symbols.methods.applicable_accessibilities = public, private, protected
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+
