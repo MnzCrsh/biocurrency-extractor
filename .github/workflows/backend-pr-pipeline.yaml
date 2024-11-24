@@ -14,7 +14,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -24,6 +24,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    - name: Restore dependencies
+      run: dotnet restore
     - name: Run xUnit tests
       run: dotnet test --no-build --verbosity normal
       
@@ -31,6 +37,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    - name: Restore dependencies
+      run: dotnet restore
     - name: Install Fantomas tool
       run: dotnet tool install --global fantomas-tool
     - name: Run code style check with Fantomas
