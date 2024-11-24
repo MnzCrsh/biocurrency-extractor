@@ -21,11 +21,15 @@ jobs:
       run: dotnet build --no-restore
     
   test:
+    runs-on: ubuntu-latest
+    
     steps:
     - name: Run xUnit tests
       run: dotnet test --no-build --verbosity normal
       
   code-style:
+    runs-on: ubuntu-latest
+    
     steps:
     - name: Install Fantomas tool
       run: dotnet tool install --global fantomas-tool
