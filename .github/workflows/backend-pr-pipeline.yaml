@@ -16,9 +16,9 @@ jobs:
       with:
         dotnet-version: 9.0.x
     - name: Restore dependencies
-      run: dotnet restore backend/
+      run: dotnet restore backend/src/DataReceiver/
     - name: Build
-      run: dotnet build backend/ --no-restore
+      run: dotnet build backend/src/DataReceiver/ --no-restore
     
   test:
     runs-on: ubuntu-latest
@@ -30,9 +30,9 @@ jobs:
       with:
         dotnet-version: 9.0.x
     - name: Restore dependencies
-      run: dotnet restore backend/
+      run: dotnet restore backend/src/DataReceiver/
     - name: Run xUnit tests
-      run: dotnet test backend/ --no-build --verbosity normal
+      run: dotnet test backend/src/DataReceiver/ --no-build --verbosity normal
       
   code-style:
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
       with:
         dotnet-version: 9.0.x
     - name: Restore dependencies
-      run: dotnet restore backend/
+      run: dotnet restore backend/src/DataReceiver/
     - name: Install Fantomas tool
       run: dotnet tool install --global fantomas-tool
     - name: Run code style check with Fantomas
