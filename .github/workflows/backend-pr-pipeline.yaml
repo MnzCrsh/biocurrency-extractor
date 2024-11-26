@@ -8,49 +8,44 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
-    - name: Setup working directory
-      run: cd backend/src/DataReceiver
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore backend/
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build backend/ --no-restore
     
   test:
     runs-on: ubuntu-latest
     
     steps:
+    - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
-    - name: Setup working directory
-      run: cd backend/src/DataReceiver
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore backend/
     - name: Run xUnit tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test backend/ --no-build --verbosity normal
       
   code-style:
     runs-on: ubuntu-latest
     
     steps:
+    - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
-    - name: Setup working directory
-      run: cd backend/src/DataReceiver
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore backend/
     - name: Install Fantomas tool
       run: dotnet tool install --global fantomas-tool
     - name: Run code style check with Fantomas
-      run: |
-        dotnet fantomas --check .
+      run: dotnet fantomas --check backend
