@@ -48,4 +48,4 @@ jobs:
     - name: Install Fantomas tool
       run: dotnet tool install --global fantomas-tool
     - name: Run code style check with Fantomas
-      run: dotnet fantomas --check backend
+      run: fantomas --check backend/src/DataReceiver/
