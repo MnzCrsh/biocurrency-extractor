@@ -1,4 +1,4 @@
-﻿namespace DataReceiver.Api.Requests
+﻿namespace DataReceiver.Entity
 
 /// Request item with coordinates provided by browser
 type CreateGeolocationItem =

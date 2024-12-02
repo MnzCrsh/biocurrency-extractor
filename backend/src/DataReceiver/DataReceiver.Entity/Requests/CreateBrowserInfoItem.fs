@@ -1,4 +1,4 @@
-﻿namespace DataReceiver.Api.Requests
+﻿namespace DataReceiver.Entity
 
 /// <summary>
 /// Request item with browser provided meta information

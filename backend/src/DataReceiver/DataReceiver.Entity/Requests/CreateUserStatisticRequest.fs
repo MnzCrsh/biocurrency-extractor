@@ -1,4 +1,4 @@
-﻿namespace DataReceiver.Api.Requests
+﻿namespace DataReceiver.Entity
 
 /// Request to create record with acquired user statistics scraped via frontend client
 type CreateUserStatisticRequest =

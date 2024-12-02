@@ -6,9 +6,11 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DataReceiver.Entity", "Data
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DataReceiver.Api", "DataReceiver.Api\DataReceiver.Api.fsproj", "{286B4FB5-2C86-487A-BDDF-6880B5CA9D9A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DataReceiver.Database", "DataReceiver.Database\DataReceiver.Database.fsproj", "{F2FE6D72-2778-4236-A7FC-768CB39FE1C3}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DataReceiver.Redis", "DataReceiver.Redis\DataReceiver.Redis.fsproj", "{F2FE6D72-2778-4236-A7FC-768CB39FE1C3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E1BC81CE-58C3-44C4-B25B-D4DD7F4862B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{77D4F988-744C-4A1F-B3C0-E1D7716B843B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

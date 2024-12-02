@@ -2,10 +2,15 @@
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
+        <UserSecretsId>a79be6eb-a24e-46fe-aff8-106d73e1c6aa</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
         <Compile Include="Program.fs"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DataReceiver.Redis\DataReceiver.Redis.fsproj" />
     </ItemGroup>
 
 </Project>
