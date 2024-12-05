@@ -6,7 +6,7 @@ open Microsoft.Extensions.DependencyInjection
 module RedisExtensions =
 
     type IServiceCollection with
-        /// Adds Redis module to DI container
+        /// Adds Redis module to DI container. This method will add repositories and redis related services
         member services.AddRedisModule(connectionString: string) =
             RedisServices.RegisterServices services connectionString
 

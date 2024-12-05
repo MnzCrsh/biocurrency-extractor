@@ -1,5 +1,7 @@
-﻿namespace DataReceiver.Redis
+﻿namespace DataReceiver.Redis.Services
 
+open DataReceiver.Redis.Abstraction
+open DataReceiver.Redis.Repository
 open Microsoft.Extensions.DependencyInjection
 open StackExchange.Redis
 
