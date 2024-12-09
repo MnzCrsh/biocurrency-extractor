@@ -1,3 +1,6 @@
 ﻿namespace DataReceiver.Entity.Responses
 
-type ScreenInfoResponse = String
+///
+type ScreenInfoResponse =
+    { Width: int option
+      Length: int option }

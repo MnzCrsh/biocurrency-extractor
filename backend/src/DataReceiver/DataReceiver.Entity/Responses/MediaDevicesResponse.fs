@@ -1,3 +1,8 @@
 ﻿namespace DataReceiver.Entity.Responses
 
-type MediaDevicesResponse = String
+open System.Collections.Generic
+
+///
+type MediaDevicesResponse =
+    { MemoryGb: int option
+      ConnectedDevices: IEnumerable<DeviceItemResponse> option }

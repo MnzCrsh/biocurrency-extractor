@@ -1,3 +1,4 @@
 ﻿namespace DataReceiver.Entity.Responses
 
-type NetworkInfoResponse = String
+///
+type NetworkInfoResponse = { ConnectionType: string option }

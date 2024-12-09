@@ -1,3 +1,6 @@
 ﻿namespace DataReceiver.Entity.Responses
 
-type GeolocationResponse = String
+///
+type GeolocationResponse =
+    { Longitude: decimal option
+      Latitude: decimal option }

@@ -1,3 +1,7 @@
 ﻿namespace DataReceiver.Entity.Responses
 
-type BrowserInfoResponse = String
+/// Browser info response model
+type BrowserInfoResponse =
+    { UserAgent: string option
+      Platform: string option
+      Language: string option }

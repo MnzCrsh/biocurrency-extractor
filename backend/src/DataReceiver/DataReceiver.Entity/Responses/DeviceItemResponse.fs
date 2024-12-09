@@ -1,3 +1,7 @@
 ﻿namespace DataReceiver.Entity.Responses
 
-type DeviceItemResponse = String
+///
+type DeviceItemResponse =
+    { Kind: string option
+      Label: string option
+      DeviceId: string option }

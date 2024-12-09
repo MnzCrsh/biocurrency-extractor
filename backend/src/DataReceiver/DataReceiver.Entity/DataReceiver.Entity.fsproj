@@ -14,7 +14,6 @@
       <Compile Include="Requests\CreateMediaDevicesItem.fs" />
       <Compile Include="Requests\CreateNetworkInfoItem.fs" />
       <Compile Include="Requests\CreateUserStatisticRequest.fs" />
-      <Compile Include="Responses\ResponseWrapper.fs" />
       <Compile Include="Responses\DeviceItemResponse.fs" />
       <Compile Include="Responses\BrowserInfoResponse.fs" />
       <Compile Include="Responses\ScreenInfoResponse.fs" />
