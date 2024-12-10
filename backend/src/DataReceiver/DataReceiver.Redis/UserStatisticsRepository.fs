@@ -49,24 +49,26 @@ let private MapUserStatisticsToResponse (request: CreateUserStatisticRequest) : 
           request.NetworkInfo
           |> Option.map (fun info -> { ConnectionType = info.ConnectionType }) }
 
-/// Repository implementation that tries to asynchronously save serialised data to redis database
+/// Repository implementation that asynchronously works with redis database
 type UserStatisticsRepository(redis: IConnectionMultiplexer) =
     interface IUserStatisticsRepository with
         member this.SaveAsync request =
             async {
                 let db = redis.GetDatabase()
-                let redisKey = $"user:statistic:{request.UserId}"
-                let serializedRequest = JsonSerializer.Serialize(request)
 
                 try
                     let! result =
+                        let redisKey = $"user:statistic:{request.UserId}"
+                        let serializedRequest = JsonSerializer.Serialize(request)
+
                         db.StringSetAsync(redisKey, serializedRequest)
                         |> Async.AwaitTask
 
                     if result then
-                        return MapUserStatisticsToResponse request |> Ok
+                        return Ok <| MapUserStatisticsToResponse request
                     else
-                        return "Failed to save user statistics to Redis" |> Error
+                        return Error <| "Failed to save user statistics to Redis"
+
                 with
                 | ex -> return Error($"Error serializing or saving data: {ex.Message}")
             }
