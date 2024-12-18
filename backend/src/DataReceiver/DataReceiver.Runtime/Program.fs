@@ -1,4 +1,4 @@
-namespace DataReceiver
+module Program
 
 #nowarn "20"
 
@@ -8,12 +8,12 @@ open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open DataReceiver.Redis.RedisExtensions
 
-module Program =
-    let exitCode = 0
+type Startup() =
 
     [<EntryPoint>]
     let main args =
 
+        let exitCode = 0
         let builder = WebApplication.CreateBuilder(args)
 
         builder

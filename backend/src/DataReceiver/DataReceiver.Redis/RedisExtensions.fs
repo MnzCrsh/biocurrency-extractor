@@ -1,5 +1,6 @@
 ﻿namespace DataReceiver.Redis
 
+open DataReceiver.Redis.Services
 open Microsoft.Extensions.DependencyInjection
 
 /// Extension method for DataReceiver.Redis module

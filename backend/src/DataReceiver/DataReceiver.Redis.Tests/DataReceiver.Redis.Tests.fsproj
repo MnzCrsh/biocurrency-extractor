@@ -14,4 +14,12 @@
         <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Include="UserStatisticsRepositoryTests.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\tests\DataReceiver.Fixture\DataReceiver.Fixture.fsproj" />
+    </ItemGroup>
+
 </Project>

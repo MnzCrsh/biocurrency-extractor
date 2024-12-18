@@ -7,6 +7,9 @@
 
     <ItemGroup>
         <Compile Include="Program.fs"/>
+        <EditorConfigFiles Include=".editorconfig">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </EditorConfigFiles>
     </ItemGroup>
 
     <ItemGroup>

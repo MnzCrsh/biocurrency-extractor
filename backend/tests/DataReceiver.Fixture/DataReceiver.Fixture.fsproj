@@ -26,6 +26,7 @@
 
     <ItemGroup>
       <Compile Include="ContainerTestBase.fs" />
+      <Compile Include="DataReceiverFixtureFactory.fs" />
     </ItemGroup>
 
 </Project>

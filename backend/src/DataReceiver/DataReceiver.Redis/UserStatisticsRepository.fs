@@ -1,5 +1,6 @@
 ﻿module DataReceiver.Redis.Repository
 
+open System
 open System.Text.Json
 open DataReceiver.Entity
 open DataReceiver.Entity.Responses
@@ -8,7 +9,7 @@ open StackExchange.Redis
 
 
 /// Maps device create request to response model
-let private MapDeviceItemToResponse (request: CreateDeviceItem) : DeviceItemResponse =
+let private MapDeviceItemToResponse (request: CreateDeviceItem) =
     { Kind = request.Kind
       Label = request.Label
       DeviceId = request.DeviceId }
@@ -49,26 +50,52 @@ let private MapUserStatisticsToResponse (request: CreateUserStatisticRequest) : 
           request.NetworkInfo
           |> Option.map (fun info -> { ConnectionType = info.ConnectionType }) }
 
+/// Gets redis key by appending Guid to string template
+let private CombineRedisKey (id: Guid) = $"user:statistic:{id}"
+
 /// Repository implementation that asynchronously works with redis database
 type UserStatisticsRepository(redis: IConnectionMultiplexer) =
     interface IUserStatisticsRepository with
-        member this.SaveAsync request =
+        member _.SaveAsync request =
+            let saveToRedis (db: IDatabase) (key: string, value: string) =
+                async {
+                    let! result = db.StringSetAsync(key, value) |> Async.AwaitTask
+                    return result
+                }
+
             async {
-                let db = redis.GetDatabase()
-
                 try
-                    let! result =
-                        let redisKey = $"user:statistic:{request.UserId}"
-                        let serializedRequest = JsonSerializer.Serialize(request)
+                    let db = redis.GetDatabase()
+                    let redisKey = request.UserId |> CombineRedisKey
+                    let serializedRequest = request |> JsonSerializer.Serialize
 
-                        db.StringSetAsync(redisKey, serializedRequest)
-                        |> Async.AwaitTask
+                    let! result = saveToRedis db (redisKey, serializedRequest)
 
                     if result then
                         return Ok <| MapUserStatisticsToResponse request
                     else
-                        return Error <| "Failed to save user statistics to Redis"
+                        return Error "Failed to save user statistics to Redis"
 
                 with
-                | ex -> return Error($"Error serializing or saving data: {ex.Message}")
+                | ex -> return Error $"Error serializing or saving data: {ex.Message}"
+            }
+
+        member _.GetById(id) =
+            async {
+                try
+                    let db = redis.GetDatabase()
+
+                    let! redisString =
+                        CombineRedisKey id
+                        |> db.StringGetAsync
+                        |> Async.AwaitTask
+
+                    let deserializedResult =
+                        redisString
+                        |> JsonSerializer.Deserialize<UserStatisticsResponse>
+
+                    return Ok deserializedResult
+
+                with
+                | ex -> return Error $"Unable to get data for user with ID:{id} with error {ex}"
             }
