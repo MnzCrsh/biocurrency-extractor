@@ -5,13 +5,13 @@
         <IsPackable>false</IsPackable>
         <GenerateProgramFile>false</GenerateProgramFile>
         <RootNamespace>DataReceiver.Redis.Tests</RootNamespace>
+        <NoWarn>$(NoWarn);FS0988</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="AutoFixture.AutoFakeItEasy" Version="5.0.0-preview0011" />
         <PackageReference Include="AutoFixture.Xunit2" Version="5.0.0-preview0011" />
         <PackageReference Include="coverlet.collector" Version="6.0.2"/>
-        <PackageReference Include="FluentAssertions" Version="7.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1"/>
         <PackageReference Include="Testcontainers.Redis" Version="4.1.0" />
@@ -26,7 +26,8 @@
 
     <ItemGroup>
       <Compile Include="ContainerTestBase.fs" />
-      <Compile Include="DataReceiverFixtureFactory.fs" />
+      <Compile Include="DataReceiverTestFixture.fs" />
+      <Compile Include="InternalsVisible.fs" />
     </ItemGroup>
 
 </Project>

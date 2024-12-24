@@ -8,10 +8,11 @@ open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open DataReceiver.Redis.RedisExtensions
 
-type Startup() =
+/// Passable EntryPoint
+type CoreEntry() =
 
     [<EntryPoint>]
-    let main args =
+    static let main args =
 
         let exitCode = 0
         let builder = WebApplication.CreateBuilder(args)

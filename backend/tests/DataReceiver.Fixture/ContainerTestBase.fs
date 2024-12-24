@@ -4,28 +4,42 @@ open System.Threading.Tasks
 open DotNet.Testcontainers.Builders
 open DotNet.Testcontainers.Containers
 open Xunit
+open Xunit.Abstractions
 
-/// Test containers orchestrator
-type DataReceiverTestContainers() =
+type DataReceiverTestContainers(output: ITestOutputHelper) =
 
-    /// Redis image name
-    let redisImage = "redis:latest"
-
+    /// Private client network
     let network = NetworkBuilder().Build()
 
-    /// Redis test container
     let redisContainer =
+        let redisImage = "redis:latest"
+        let redisPort = 6379
+
         ContainerBuilder()
             .WithImage(redisImage)
-            .WithPortBinding(6379, 6379) // Map port 6379:6379
+            .WithPortBinding(redisPort, redisPort)
             .WithNetwork(network)
+            .WithNetworkAliases("redis")
+            .WithWaitStrategy(
+                Wait
+                    .ForUnixContainer()
+                    .UntilPortIsAvailable(redisPort)
+            )
             .WithCleanUp(true)
             .Build()
 
-    /// Starts containers in separate threads
-    let startTestContainers () =
+    let logContainerState (container: IContainer) =
+        output.WriteLine($"Container {container.Name} logs:\n{container.GetLogsAsync() |> Async.AwaitTask}")
+        output.WriteLine($"Container {container.Name} state: {container.State}")
+
+    /// Starts containers in separate threads.
+    let startTestContainers () : Task<unit array> =
         let startContainerAsync (container: IContainer) =
-            async { do! container.StartAsync() |> Async.AwaitTask }
+            async {
+                output.WriteLine $"Starting container {container.Name}"
+                do! container.StartAsync() |> Async.AwaitTask
+                logContainerState container
+            }
 
         let containers = [ redisContainer ]
 
@@ -33,11 +47,12 @@ type DataReceiverTestContainers() =
         |> List.map startContainerAsync
         |> List.map Async.StartAsTask
         |> Task.WhenAll
-        |> Async.AwaitTask
 
-    // Used to provide asynchronous lifetime functionality
     interface IAsyncLifetime with
-        member _.InitializeAsync() = task { do! startTestContainers }
+        member _.InitializeAsync() = startTestContainers ()
 
         member _.DisposeAsync() =
-            task { do! redisContainer.DisposeAsync() }
+            task {
+                do! redisContainer.DisposeAsync()
+                output.WriteLine "All Test containers has been disposed"
+            }

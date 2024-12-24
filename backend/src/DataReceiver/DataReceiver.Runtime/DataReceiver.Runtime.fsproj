@@ -7,13 +7,16 @@
 
     <ItemGroup>
         <Compile Include="Program.fs"/>
-        <EditorConfigFiles Include=".editorconfig">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </EditorConfigFiles>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\DataReceiver.Redis\DataReceiver.Redis.fsproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EditorConfigFiles Include=".editorconfig">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </EditorConfigFiles>
     </ItemGroup>
 
 </Project>
