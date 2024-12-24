@@ -1,4 +1,4 @@
-﻿namespace DataReceiver.Api.Requests
+﻿namespace DataReceiver.Entity
 
 open System.Collections.Generic
 

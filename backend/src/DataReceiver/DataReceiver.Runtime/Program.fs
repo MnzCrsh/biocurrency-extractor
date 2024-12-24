@@ -1,20 +1,26 @@
-namespace DataReceiver
+module Program
 
 #nowarn "20"
 
 open Microsoft.AspNetCore.Builder
+open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
+open DataReceiver.Redis.RedisExtensions
 
-module Program =
-    let exitCode = 0
+/// Passable EntryPoint
+type CoreEntry() =
 
     [<EntryPoint>]
-    let main args =
+    static let main args =
 
+        let exitCode = 0
         let builder = WebApplication.CreateBuilder(args)
 
-        builder.Services.AddControllers()
+        builder
+            .Services
+            .AddRedisModule(builder.Configuration.GetConnectionString("Redis"))
+            .AddControllers()
 
         let app = builder.Build()
 
