@@ -4,16 +4,16 @@ open System.Threading.Tasks
 open DotNet.Testcontainers.Builders
 open DotNet.Testcontainers.Containers
 open Xunit
-open Xunit.Abstractions
 
-type DataReceiverTestContainers(output: ITestOutputHelper) =
+type DataReceiverTestContainers() =
 
     /// Private client network
     let network = NetworkBuilder().Build()
 
+    let redisPort = 6379
+
     let redisContainer =
         let redisImage = "redis:latest"
-        let redisPort = 6379
 
         ContainerBuilder()
             .WithImage(redisImage)
@@ -28,18 +28,11 @@ type DataReceiverTestContainers(output: ITestOutputHelper) =
             .WithCleanUp(true)
             .Build()
 
-    let logContainerState (container: IContainer) =
-        output.WriteLine($"Container {container.Name} logs:\n{container.GetLogsAsync() |> Async.AwaitTask}")
-        output.WriteLine($"Container {container.Name} state: {container.State}")
 
     /// Starts containers in separate threads.
     let startTestContainers () : Task<unit array> =
         let startContainerAsync (container: IContainer) =
-            async {
-                output.WriteLine $"Starting container {container.Name}"
-                do! container.StartAsync() |> Async.AwaitTask
-                logContainerState container
-            }
+            async { do! container.StartAsync() |> Async.AwaitTask }
 
         let containers = [ redisContainer ]
 
@@ -48,11 +41,11 @@ type DataReceiverTestContainers(output: ITestOutputHelper) =
         |> List.map Async.StartAsTask
         |> Task.WhenAll
 
+    member _.RedisConnectionString =
+        $"localhost:{redisContainer.GetMappedPublicPort(6379)},abortConnect=false"
+
     interface IAsyncLifetime with
         member _.InitializeAsync() = startTestContainers ()
 
         member _.DisposeAsync() =
-            task {
-                do! redisContainer.DisposeAsync()
-                output.WriteLine "All Test containers has been disposed"
-            }
+            task { do! redisContainer.DisposeAsync() }
