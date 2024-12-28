@@ -22,8 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\tests\DataReceiver.Fixture\DataReceiver.Fixture.fsproj" />
-      <ProjectReference Include="..\DataReceiver.Runtime\DataReceiver.Runtime.fsproj" />
+      <ProjectReference Include="..\DataReceiver.Fixture\DataReceiver.Fixture.fsproj" />
     </ItemGroup>
 
 </Project>
