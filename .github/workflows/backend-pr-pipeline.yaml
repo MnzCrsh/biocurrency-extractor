@@ -29,6 +29,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: List test binaries
+      run: ls -R /home/runner/work/biocurrency-extractor/biocurrency-extractor/backend/tests/DataReceiver.Fixture/bin/Debug/net9.0
+
+
     - name: Setup Docker
       uses: docker/setup-buildx-action@v2
 
