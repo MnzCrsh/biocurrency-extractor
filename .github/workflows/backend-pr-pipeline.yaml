@@ -29,10 +29,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: List test binaries
-      run: ls -R /home/runner/work/biocurrency-extractor/biocurrency-extractor/backend/tests/DataReceiver.Fixture/bin/Debug/net9.0
-
-
     - name: Setup Docker
       uses: docker/setup-buildx-action@v2
 
@@ -45,7 +41,7 @@ jobs:
       run: dotnet restore backend/src/DataReceiver/
 
     - name: Run xUnit tests
-      run: dotnet test /home/runner/work/biocurrency-extractor/biocurrency-extractor/backend/src/DataReceiver/ --no-build --verbosity normal
+      run: dotnet test backend/src/DataReceiver/ --no-build --verbosity normal 
 
     - name: Check running Docker containers
       run: docker ps -a

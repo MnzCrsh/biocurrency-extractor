@@ -1,6 +1,6 @@
 ﻿module DataReceiver.Redis.Tests.UserStatisticsRepositoryTests
 
-open DataReceiver.ContainerTestBase
+open DataReceiver.TestContainers
 open DataReceiver.Fixture
 open FsUnit.Xunit
 open Microsoft.Extensions.DependencyInjection

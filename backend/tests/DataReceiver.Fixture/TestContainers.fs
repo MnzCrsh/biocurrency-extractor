@@ -1,4 +1,4 @@
-﻿module DataReceiver.ContainerTestBase
+﻿module DataReceiver.TestContainers
 
 open System.Threading.Tasks
 open DotNet.Testcontainers.Builders
@@ -7,7 +7,7 @@ open Xunit
 
 type DataReceiverTestContainers() =
 
-    /// Private client network
+    /// Client network
     let network = NetworkBuilder().Build()
 
     let redisPort = 6379
