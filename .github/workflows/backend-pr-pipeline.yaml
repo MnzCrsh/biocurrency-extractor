@@ -30,10 +30,6 @@ jobs:
     - uses: actions/checkout@v4
 
 
-    - name: List directories
-      run: |
-        ls -R backend/tests
-
     - name: Setup Docker
       uses: docker/setup-buildx-action@v2
 
@@ -45,8 +41,11 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore backend/src/DataReceiver/
 
+    - name: Build
+      run: dotnet build backend/src/DataReceiver/ --no-restore --verbosity minimal
+
     - name: Run xUnit tests
-      run: dotnet test backend/src/DataReceiver/ --verbosity normal 
+      run: dotnet test backend/src/DataReceiver/ --no-build --no-restore --verbosity minimal
 
     - name: Check running Docker containers
       run: docker ps -a
