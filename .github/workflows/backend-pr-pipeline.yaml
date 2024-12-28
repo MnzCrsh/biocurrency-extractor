@@ -31,8 +31,6 @@ jobs:
 
     - name: List directories
       run: |
-        ls -R backend/src/DataReceiver/bin
-        ls -R backend/src/DataReceiver/obj
         ls -R backend/tests
 
 
