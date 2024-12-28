@@ -5,7 +5,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <IsPackable>false</IsPackable>
         <GenerateProgramFile>false</GenerateProgramFile>
-        <RootNamespace>DataReceiver.Redis.Tests</RootNamespace>
+        <RootNamespace>DataReceiver.Fixture</RootNamespace>
         <NoWarn>$(NoWarn);FS0988</NoWarn>
     </PropertyGroup>
 
