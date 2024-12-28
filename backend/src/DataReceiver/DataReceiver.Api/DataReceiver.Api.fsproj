@@ -6,13 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Include="Requests\CreateDeviceItem.fs" />
-      <Compile Include="Requests\CreateBrowserInfoItem.fs" />
-      <Compile Include="Requests\CreateScreenInfoItem.fs" />
-      <Compile Include="Requests\CreateGeolocationItem.fs" />
-      <Compile Include="Requests\CreateMediaDevicesItem.fs" />
-      <Compile Include="Requests\CreateNetworkInfoItem.fs" />
-      <Compile Include="Requests\CreateUserStatisticRequest.fs" />
       <Folder Include="Controllers\" />
     </ItemGroup>
 

@@ -7,6 +7,20 @@
 
     <ItemGroup>
       <Folder Include="Entities\" />
+      <Compile Include="Requests\CreateDeviceItem.fs" />
+      <Compile Include="Requests\CreateBrowserInfoItem.fs" />
+      <Compile Include="Requests\CreateScreenInfoItem.fs" />
+      <Compile Include="Requests\CreateGeolocationItem.fs" />
+      <Compile Include="Requests\CreateMediaDevicesItem.fs" />
+      <Compile Include="Requests\CreateNetworkInfoItem.fs" />
+      <Compile Include="Requests\CreateUserStatisticRequest.fs" />
+      <Compile Include="Responses\DeviceItemResponse.fs" />
+      <Compile Include="Responses\BrowserInfoResponse.fs" />
+      <Compile Include="Responses\ScreenInfoResponse.fs" />
+      <Compile Include="Responses\GeolocationResponse.fs" />
+      <Compile Include="Responses\MediaDevicesResponse.fs" />
+      <Compile Include="Responses\NetworkInfoResponse.fs" />
+      <Compile Include="Responses\UserStatisticsResponse.fs" />
     </ItemGroup>
 
 </Project>

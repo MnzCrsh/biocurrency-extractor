@@ -11,12 +11,15 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+
     - name: Restore dependencies
       run: dotnet restore backend/src/DataReceiver/
+
     - name: Build
       run: dotnet build backend/src/DataReceiver/ --no-restore
     
@@ -25,27 +28,44 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+
+
+    - name: Setup Docker
+      uses: docker/setup-buildx-action@v2
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+
     - name: Restore dependencies
       run: dotnet restore backend/src/DataReceiver/
+
+    - name: Build
+      run: dotnet build backend/src/DataReceiver/ --no-restore --verbosity minimal
+
     - name: Run xUnit tests
-      run: dotnet test backend/src/DataReceiver/ --no-build --verbosity normal
+      run: dotnet test backend/src/DataReceiver/ --no-build --no-restore --verbosity minimal
+
+    - name: Check running Docker containers
+      run: docker ps -a
+
       
   code-style:
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v4
+   
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
     - name: Restore dependencies
       run: dotnet restore backend/src/DataReceiver/
+
     - name: Install Fantomas tool
       run: dotnet tool install --global fantomas-tool
+
     - name: Run code style check with Fantomas
       run: fantomas --check backend/src/DataReceiver/
