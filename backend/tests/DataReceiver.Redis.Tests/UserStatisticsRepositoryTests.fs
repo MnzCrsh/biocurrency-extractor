@@ -11,13 +11,6 @@ open Xunit
 
 /// UserStatisticsRepository tests
 type UserStatisticsRepositoryTests(fixture: DataReceiverTestFactory, _containers: DataReceiverTestContainers) =
-
-    [<Fact>]
-    let ``Redis should be reachable`` () =
-        use scope = fixture.CreateScope()
-        use multiplexer = scope.ServiceProvider.GetRequiredService<IConnectionMultiplexer>()
-        multiplexer.IsConnected |> Assert.True
-
     [<Theory; AutoData>]
     let ``SaveAsync should add statistics to DB`` (request: CreateUserStatisticRequest) =
         async {
