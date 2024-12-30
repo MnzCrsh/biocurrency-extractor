@@ -6,7 +6,6 @@ open DataReceiver.Redis.Abstraction
 open DataReceiver.TestContainers
 open DataReceiver.Fixture
 open Microsoft.Extensions.DependencyInjection
-open StackExchange.Redis
 open Xunit
 
 /// UserStatisticsRepository tests
