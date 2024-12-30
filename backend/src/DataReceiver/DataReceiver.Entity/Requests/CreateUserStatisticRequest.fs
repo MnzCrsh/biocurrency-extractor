@@ -1,11 +1,9 @@
 ﻿namespace DataReceiver.Entity
 
-open System
-
+// TODO: Must add JWT identification, because right now statistics not bound to user
 /// Request to create record with acquired user statistics scraped via frontend client
 type CreateUserStatisticRequest =
-    { UserId: Guid
-      BrowserInfo: CreateBrowserInfoItem option
+    { BrowserInfo: CreateBrowserInfoItem option
       ScreenInfo: CreateScreenInfoItem option
       Geolocation: CreateGeolocationItem option
       MediaDevices: CreateMediaDevicesItem option

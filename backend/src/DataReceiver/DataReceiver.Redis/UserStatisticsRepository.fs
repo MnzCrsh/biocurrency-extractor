@@ -20,31 +20,37 @@ let private OptionMapSeq mapper optionSeq =
     optionSeq |> Option.map (Seq.map mapper)
 
 /// Maps create request to response model
-let private MapUserStatisticsToResponse (request: CreateUserStatisticRequest) : UserStatisticsResponse =
-    { BrowserInfo =
-        request.BrowserInfo
-        |> Option.map (fun info ->
-            { Language = info.Language
-              Platform = info.Platform
-              UserAgent = info.UserAgent })
+let private MapUserStatisticsToResponse (request: CreateUserStatisticRequest, id: Guid) : UserStatisticsResponse =
+    { Id = id
+
+      BrowserInfo =
+          request.BrowserInfo
+          |> Option.map (fun info ->
+              { Language = info.Language
+                Platform = info.Platform
+                UserAgent = info.UserAgent }
+          )
 
       ScreenInfo =
           request.ScreenInfo
           |> Option.map (fun info ->
               { Width = info.Width
-                Length = info.Length })
+                Length = info.Length }
+          )
 
       Geolocation =
           request.Geolocation
           |> Option.map (fun info ->
               { Latitude = info.Latitude
-                Longitude = info.Longitude })
+                Longitude = info.Longitude }
+          )
 
       MediaDevices =
           request.MediaDevices
           |> Option.map (fun info ->
               { ConnectedDevices = OptionMapSeq MapDeviceItemToResponse info.ConnectedDevices
-                MemoryGb = info.MemoryGb })
+                MemoryGb = info.MemoryGb }
+          )
 
       NetworkInfo =
           request.NetworkInfo
@@ -66,13 +72,14 @@ type UserStatisticsRepository(redis: IConnectionMultiplexer) =
             async {
                 try
                     let db = redis.GetDatabase()
-                    let redisKey = request.UserId |> CombineRedisKey
-                    let serializedRequest = request |> JsonSerializer.Serialize
+                    let statisticsId = Guid.NewGuid()
+                    let redisKey = CombineRedisKey statisticsId
+                    let serializedRequest = JsonSerializer.Serialize request
 
                     let! result = saveToRedis db (redisKey, serializedRequest)
 
                     if result then
-                        return Ok <| MapUserStatisticsToResponse request
+                        return Ok(MapUserStatisticsToResponse(request, statisticsId))
                     else
                         return Error "Failed to save user statistics to Redis"
 
@@ -80,7 +87,7 @@ type UserStatisticsRepository(redis: IConnectionMultiplexer) =
                 | ex -> return Error $"Error serializing or saving data: {ex.Message}"
             }
 
-        member _.GetById(id) =
+        member _.GetByIdAsync id =
             async {
                 try
                     let db = redis.GetDatabase()
@@ -90,11 +97,16 @@ type UserStatisticsRepository(redis: IConnectionMultiplexer) =
                         |> db.StringGetAsync
                         |> Async.AwaitTask
 
-                    let deserializedResult =
-                        redisString
-                        |> JsonSerializer.Deserialize<UserStatisticsResponse>
+                    if redisString.HasValue then
+                        let deserializedResult =
+                            JsonSerializer.Deserialize<UserStatisticsResponse> redisString
 
-                    return Ok deserializedResult
+                        match deserializedResult with
+                        | result ->
+                            let enrichedResult = { result with Id = id }
+                            return Ok enrichedResult
+                    else
+                        return Error $"Data not found for user with ID: {id}"
 
                 with
                 | ex -> return Error $"Unable to get data for user with ID:{id} with error {ex}"
